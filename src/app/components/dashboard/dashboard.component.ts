@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Role } from 'src/app/enums/roles.enums';
 import { UserModel } from 'src/app/models/users.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,15 +11,17 @@ import { UserModel } from 'src/app/models/users.model';
 })
 export class DashboardComponent implements OnInit {
   public user!: UserModel;
+  public userRole = Role;
 
   constructor(
     private cookieService: CookieService,
+    private userService: UserService
   ) {
-    this.user = JSON.parse(this.cookieService.get('user'));
   }
 
   ngOnInit(): void {
-    
+    this.user = this.userService.user;
+    console.log(this.user);
   }
 
 }

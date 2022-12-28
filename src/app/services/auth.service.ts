@@ -32,9 +32,14 @@ export class AuthService {
             }).subscribe((response: any) => {
                 this.cookieService.set('isLoggedIn', 'true');
                 this.cookieService.set('user', JSON.stringify(response));
-                localStorage.setItem('token', response.token);
                 this.router.navigate(['/dashboard']);
             }
         );
+    }
+
+    public logout() {
+        this.cookieService.set('isLoggedIn', 'false');
+        this.cookieService.delete('user');
+        this.router.navigate(['/login']);
     }
 }
