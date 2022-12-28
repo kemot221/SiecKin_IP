@@ -5,7 +5,8 @@
       "email": "admin@mail.com",
       "username": "admin",
       "password": "zaq21wSX",
-      "role": 0
+      "role": 0,
+      "code": "123456"  
     }
   ]
 }
