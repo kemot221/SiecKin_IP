@@ -17,7 +17,6 @@ server.post('/login', async (req: any, res: any, next: any) => {
   const user = (await users).filter(
     (u: any) => u.email === req.body.user.email && u.password === req.body.user.password
   )[0];
-
   if (user) {
     res.send({ ...formatUser(user), token: checkIfAdmin(user) });
   } else {
@@ -51,8 +50,11 @@ function formatUser(user: any) {
   return user;
 }
 
-function checkIfAdmin(user: any, bypassToken = false) {
-  return user.role === 0 || bypassToken === true
+async function checkIfAdmin(user: any, bypassToken = false) {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT role_id FROM sieckin.user_role WHERE user_id = ?", user.id);
+  if (conn) conn.release();
+  return rows[0].role_id === 1 || bypassToken === true
     ? 'admin-token'
     : 'user-token';
 }
