@@ -3,11 +3,11 @@ import { Router } from "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { LoginModel } from "../models/login.model";
 import { CookieService } from "ngx-cookie-service";
+import { ResetPasswordModel } from "../models/resetPassword.model";
+import { SERVER_URL } from "../consts/const";
 
 @Injectable()
 export class AuthService {
-    apiURL = 'http://localhost:3000';
-
     constructor(
         private router: Router,
         private httpClient: HttpClient,
@@ -27,7 +27,7 @@ export class AuthService {
     }
 
     public login(user: LoginModel) {
-        this.httpClient.post(this.apiURL + '/login', {
+        this.httpClient.post(SERVER_URL + '/login', {
             user
             }).subscribe((response: any) => {
                 this.cookieService.set('isLoggedIn', 'true');
@@ -41,5 +41,11 @@ export class AuthService {
         this.cookieService.set('isLoggedIn', 'false');
         this.cookieService.delete('user');
         this.router.navigate(['/login']);
+    }
+
+    public resetPassword(resetData: ResetPasswordModel) {
+        this.httpClient.post(SERVER_URL + '/reset-password', {
+            resetData
+            }).subscribe();
     }
 }
