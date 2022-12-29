@@ -20,11 +20,11 @@
         </mat-form-field>
         
         <div class="login-buttons d-flex ai-c jc-sb">
-          <button type="button" class="cinema_button medium secondary" (click)="remindPasswordMode = !remindPasswordMode">
+          <button type="button" class="cinema_button medium secondary" (click)="toggleMode()">
             Zapomniałeś hasła?
           </button>
           
-          <button type="submit" class="cinema_button medium primary">
+          <button type="submit" [disabled]="!loginForm.valid" class="cinema_button medium primary">
             Login
           </button>
         </div>
@@ -63,11 +63,11 @@
         </mat-form-field>
         
         <div class="login-buttons d-flex ai-c jc-sb">
-          <button type="button" class="cinema_button medium secondary" (click)="remindPasswordMode = !remindPasswordMode">
+          <button type="button" class="cinema_button medium secondary" (click)="toggleMode()">
             Cofnij
           </button>
           
-          <button type="submit" class="cinema_button medium primary" (click)="remindPasswordMode = !remindPasswordMode">
+          <button type="submit" [disabled]="validate(remindPasswordForm)" class="cinema_button medium primary">
             Zresetuj hasło
           </button>
         </div>

@@ -30,10 +30,27 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
+  public login() {
     this.authService.login(this.loginForm.value);
   }
 
-  resetPassword() {
+  public resetPassword() {
+    this.authService.resetPassword(this.remindPasswordForm.value);
+    this.toggleMode();
+  }
+
+  public toggleMode() {
+    this.remindPasswordMode = !this.remindPasswordMode;
+    this.remindPasswordForm.reset();
+  }
+
+  public validate(form: FormGroup): boolean {
+    if(!form.valid) {
+      return true;
+    }
+    if(form.value.password !== form.value.confirmPassword) {
+      return true;
+    }
+    return false;
   }
 }
