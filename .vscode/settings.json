@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "kino-be\\lib\\mariadb-java-client-3.1.0.jar"
+    ]
+}
