@@ -3,5 +3,38 @@ CREATE TABLE `sieckin`.`roles` (`id` INT NOT NULL AUTO_INCREMENT , `name` VARCHA
 CREATE TABLE user_role (user_id INT NOT NULL, role_id INT NOT NULL, CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id), CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES roles(id)); 
 CREATE TABLE `sieckin`.`movies` (`id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(20) NOT NULL , `length` INT NOT NULL , `description` VARCHAR(500) , `state` ENUM(`new`, `running`, `retired`) , PRIMARY KEY (`id`));
 CREATE TABLE `sieckin`.`cinemas` (`id` INT NOT NULL AUTO_INCREMENT , `location` VARCHAR(150) NOT NULL , PRIMARY KEY (`id`));
-CREATE TABLE `sieckin`.`halls` (`id` INT NOT NULL AUTO_INCREMENT , `cinema_id` INT NOT NULL, `tag` VARCHAR(3) NOT NULL, `capacity` INT NOT NULL, `seats` JSON NOT NULL, PRIMARY KEY (`id`), CONSTRAINT fk_cinema_id FOREIGN KEY (cinema_id) REFERENCES cinemas(id));
-CREATE TABLE `sieckin`.`showings` (`id` INT NOT NULL AUTO_INCREMENT , `hall_id` INT NOT NULL , `time` DATETIME NOT NULL , `movie_id` INT NOT NULL , `seats` JSON NOT NULL , PRIMARY KEY (`id`) , CONSTRAINT fk_hall_id FOREIGN KEY (hall_id) REFERENCES halls(id) , CONSTRAINT fk_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id));
+CREATE TABLE `sieckin`.`halls` (`id` INT NOT NULL AUTO_INCREMENT , `cinema_id` INT NOT NULL, `tag` VARCHAR(3) NOT NULL, `capacity` INT NOT NULL, PRIMARY KEY (`id`), CONSTRAINT fk_cinema_id FOREIGN KEY (cinema_id) REFERENCES cinemas(id));
+CREATE TABLE `sieckin`.`showings` (`id` INT NOT NULL AUTO_INCREMENT , `hall_id` INT NOT NULL , `time` DATETIME NOT NULL , `movie_id` INT NOT NULL , PRIMARY KEY (`id`) , CONSTRAINT fk_hall_id FOREIGN KEY (hall_id) REFERENCES halls(id) , CONSTRAINT fk_movie_id FOREIGN KEY (movie_id) REFERENCES movies(id));
+CREATE TABLE `sieckin`.`tickets` (`id` INT NOT NULL AUTO_INCREMENT , `showing_id` INT NOT NULL , `row` INT NOT NULL , `seat` INT NOT NULL , PRIMARY KEY (`id`) , CONSTRAINT fk_showing_id FOREIGN KEY (showing_id) REFERENCES showings(id));
+
+--PROCEDURY DO TWORZENIA TABEL DLA SAL I SEANSÓW
+DELIMITER //
+CREATE PROCEDURE createHall(tblName VARCHAR(255))
+BEGIN
+    SET @tableName = tblName;
+    SET @q = CONCAT('
+        CREATE TABLE IF NOT EXISTS `' , @tableName, '` (
+            `id` INT NOT NULL AUTO_INCREMENT,
+            `row` INT NOT NULL,
+            `seats` INT NOT NULL,
+            PRIMARY KEY (`id`)
+        )');
+    PREPARE stmt FROM @q;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
+CREATE PROCEDURE createShowing(tblName VARCHAR(255))
+BEGIN
+    SET @tableName = tblName;
+    SET @q = CONCAT('
+        CREATE TABLE IF NOT EXISTS `' , @tableName, '` (
+            `id` INT NOT NULL AUTO_INCREMENT,
+            `row` INT NOT NULL,
+            `seat` INT NOT NULL,
+            `isTaken` BOOLEAN NOT NULL,
+            PRIMARY KEY (`id`)
+        )');
+    PREPARE stmt FROM @q;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
