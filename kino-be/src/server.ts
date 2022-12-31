@@ -1,3 +1,5 @@
+import internal from "stream";
+
 const jsonServer = require('json-server');
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
@@ -78,4 +80,17 @@ async function readUsers(){
   const rows = await conn.query("SELECT * FROM sieckin.users");
   if (conn) conn.release();
   return rows;
+}
+
+async function createHall(cinema_id: number, tag: string, seats: number[]){
+  let capacity : number = 0;
+  seats.forEach((element:number) => {
+    capacity += element;
+  });
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.halls(cinema_id, tag, capacity) VALUES (?,?,?)", [cinema_id, tag, capacity]);
+  const row = await conn.query("SELECT id FROM halls WHERE cinema_id = ? AND tag = ?", [cinema_id, tag]);
+  const id : number = row[0].id;
+  const tblName : string = 'hall_' + id.toString();
+  await conn.query("CALL createHall(?)", tblName);
 }
