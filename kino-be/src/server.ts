@@ -89,8 +89,33 @@ async function createHall(cinema_id: number, tag: string, seats: number[]){
   });
   const conn = await pool.getConnection();
   await conn.query("INSERT INTO sieckin.halls(cinema_id, tag, capacity) VALUES (?,?,?)", [cinema_id, tag, capacity]);
-  const row = await conn.query("SELECT id FROM halls WHERE cinema_id = ? AND tag = ?", [cinema_id, tag]);
+  const row = await conn.query("SELECT id FROM sieckin.halls WHERE cinema_id = ? AND tag = ?", [cinema_id, tag]);
   const id : number = row[0].id;
   const tblName : string = 'hall_' + id.toString();
   await conn.query("CALL createHall(?)", tblName);
+  let rowNumber: number = 1;
+  seats.forEach(async (element: number) =>{
+    await conn.query("INSERT INTO sieckin." + tblName + "(row, seats) VALUES (?,?)", [rowNumber, element]);
+    rowNumber++;
+  })
+  if (conn) conn.release();
+}
+
+async function createShowing(hall_id: number, time: Date, movie_id: number){
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.showings(hall_id, time, movie_id) VALUES (?,?,?)", [hall_id, time, movie_id]);
+  const row = await conn.query("SELECT id FROM sieckin.showings WHERE hall_id = ? AND time = ?", [hall_id, time]);
+  const id : number = row[0].id;
+  const tblName : string = 'showing_' + id.toString();
+  await conn.query("CALL createShowing(?)", tblName);
+  const hallData = await conn.query("SELECT * FROM sieckin.hall_"+ hall_id);
+  hallData.forEach(async (row: any) => {
+    const rowNumber: number = row.row;
+    const seats: number = row.seats;
+    let i: number;
+    for (i = 1; i<= seats; i++){
+      await conn.query("INSERT INTO sieckin."+tblName+"(row, seat, isTaken) VALUES (?,?,?)", [rowNumber,i,false]);
+    }
+  })
+  if (conn) conn.release();
 }
