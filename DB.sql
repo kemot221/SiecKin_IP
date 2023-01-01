@@ -14,10 +14,8 @@ BEGIN
     SET @tableName = tblName;
     SET @q = CONCAT('
         CREATE TABLE IF NOT EXISTS `' , @tableName, '` (
-            `id` INT NOT NULL AUTO_INCREMENT,
             `row` INT NOT NULL,
-            `seats` INT NOT NULL,
-            PRIMARY KEY (`id`)
+            `seats` INT NOT NULL
         )');
     PREPARE stmt FROM @q;
     EXECUTE stmt;
@@ -28,11 +26,9 @@ BEGIN
     SET @tableName = tblName;
     SET @q = CONCAT('
         CREATE TABLE IF NOT EXISTS `' , @tableName, '` (
-            `id` INT NOT NULL AUTO_INCREMENT,
             `row` INT NOT NULL,
             `seat` INT NOT NULL,
-            `isTaken` BOOLEAN NOT NULL,
-            PRIMARY KEY (`id`)
+            `isTaken` BOOLEAN NOT NULL
         )');
     PREPARE stmt FROM @q;
     EXECUTE stmt;
