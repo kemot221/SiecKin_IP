@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicesModule } from './services/services.module';
-import { SharedModule } from './components/_shared/shared/shared.module';
+import { SharedModule } from './components/_shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IsLoggedInGuard } from './guards/isLoggedIn.guard';
 
