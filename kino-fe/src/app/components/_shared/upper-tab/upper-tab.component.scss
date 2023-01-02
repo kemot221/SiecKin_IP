@@ -1,0 +1,18 @@
+@import 'abstracts/variables';
+
+.upper-tab {
+    &-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100vw - 2rem);
+        height: max-content;
+        padding: .625rem 1rem;
+        border-bottom: 1px solid $gray-400;
+        background-color: $blue-200;
+        //blur 
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+}

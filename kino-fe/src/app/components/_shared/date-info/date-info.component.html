@@ -1,1 +1,3 @@
-<p>{{ time | async | date: 'full' }}</p>
+<ng-container *ngIf="time$ | async as time">
+    <p>{{ time | date: 'd MMMM, y, h:mm:ss' }}</p>
+</ng-container>

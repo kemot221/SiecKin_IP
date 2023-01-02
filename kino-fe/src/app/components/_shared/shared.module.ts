@@ -5,10 +5,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateInfoComponent } from './date-info/date-info.component';
+import { UpperTabComponent } from './upper-tab/upper-tab.component';
 
 @NgModule({
   declarations: [
-    DateInfoComponent
+    DateInfoComponent,
+    UpperTabComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { DateInfoComponent } from './date-info/date-info.component';
     ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
-    DateInfoComponent
+    DateInfoComponent,
+    UpperTabComponent
   ]
 })
 export class SharedModule { }

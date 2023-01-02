@@ -7,7 +7,7 @@ import { map, Observable, pipe, shareReplay, timer } from 'rxjs';
   styleUrls: ['./date-info.component.scss']
 })
 export class DateInfoComponent implements OnInit {
-  private time$!: Observable<Date>;
+  public time$!: Observable<Date>;
 
   constructor() { }
 
@@ -16,9 +16,5 @@ export class DateInfoComponent implements OnInit {
       map(() => new Date()),
       shareReplay(1)
     );
-  }
-
-  get time() {
-    return this.time$;
   }
 }
