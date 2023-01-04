@@ -119,3 +119,19 @@ async function createShowing(hall_id: number, time: Date, movie_id: number){
   })
   if (conn) conn.release();
 }
+
+async function supportTickets(){
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.support_tickets");
+  if (conn) conn.release();
+  return rows;
+}
+
+async function takeSeat(showing_id: number, row: number, seat: number, customer: string){
+  const conn = await pool.getConnection();
+  await conn.query("UPDATE sieckin.showing_"+ showing_id +" SET is_taken = true WHERE row = ? AND seat = ?", [row, seat]);
+  await conn.query("INSERT INTO sieckin.tickets(showing_id, row, seat, customer) VALUES (?,?,?,?)", [showing_id, row, seat, customer]);
+  const ticket_row = await conn.query("SELECT id FROM sieckin.tickets WHERE showing_id = ? AND row = ? AND seat = ?", [showing_id, row, seat]);
+  if (conn) conn.release();
+  return ticket_row[0].id;
+}
