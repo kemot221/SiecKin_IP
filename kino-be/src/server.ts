@@ -1,3 +1,5 @@
+import internal from "stream";
+
 const jsonServer = require('json-server');
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
@@ -17,11 +19,24 @@ server.post('/login', async (req: any, res: any, next: any) => {
   const user = (await users).filter(
     (u: any) => u.email === req.body.user.email && u.password === req.body.user.password
   )[0];
-
   if (user) {
     res.send({ ...formatUser(user), token: checkIfAdmin(user) });
   } else {
     res.status(401).send('Incorrect username or password');
+  }
+});
+
+server.post('/reset-password', async (req: any, res: any, next: any) => {
+  const users = readUsers();
+  const user = (await users).filter((u: any) => u.code === req.body.resetData.code);
+  if(user) {
+    user.password = req.body.resetData.password;
+    const conn = await pool.getConnection();
+    await conn.query("UPDATE sieckin.users SET password = ? WHERE id = ?", [req.body.resetData.password, user.id]);
+    if (conn) conn.release();
+    res.status(200).send('Password reset successful');
+  }else {
+    res.status(401).send('Incorrect user code');
   }
 });
 
@@ -35,7 +50,7 @@ server.post('/register', async (req: any, res: any) => {
       token: checkIfAdmin(req.body),
     });
     const conn = await pool.getConnection();
-    const rows = await conn.query("INSERT INTO sieckin.users(email, login, password) VALUES (?,?,?)", [req.body.user.email, req.body.user.login, req.body.user.password]);
+    await conn.query("INSERT INTO sieckin.users(email, login, password) VALUES (?,?,?)", [req.body.user.email, req.body.user.login, req.body.user.password]);
     if (conn) conn.release();
   } else {
     res.status(500).send('User already exists');
@@ -51,8 +66,11 @@ function formatUser(user: any) {
   return user;
 }
 
-function checkIfAdmin(user: any, bypassToken = false) {
-  return user.role === 0 || bypassToken === true
+async function checkIfAdmin(user: any, bypassToken = false) {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT role_id FROM sieckin.user_role WHERE user_id = ?", user.id);
+  if (conn) conn.release();
+  return rows[0].role_id === 1 || bypassToken === true
     ? 'admin-token'
     : 'user-token';
 }
@@ -62,4 +80,58 @@ async function readUsers(){
   const rows = await conn.query("SELECT * FROM sieckin.users");
   if (conn) conn.release();
   return rows;
+}
+
+async function createHall(cinema_id: number, tag: string, seats: number[]){
+  let capacity : number = 0;
+  seats.forEach((element:number) => {
+    capacity += element;
+  });
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.halls(cinema_id, tag, capacity) VALUES (?,?,?)", [cinema_id, tag, capacity]);
+  const row = await conn.query("SELECT id FROM sieckin.halls WHERE cinema_id = ? AND tag = ?", [cinema_id, tag]);
+  const id : number = row[0].id;
+  const tblName : string = 'hall_' + id.toString();
+  await conn.query("CALL createHall(?)", tblName);
+  let rowNumber: number = 1;
+  seats.forEach(async (element: number) =>{
+    await conn.query("INSERT INTO sieckin." + tblName + "(row, seats) VALUES (?,?)", [rowNumber, element]);
+    rowNumber++;
+  })
+  if (conn) conn.release();
+}
+
+async function createShowing(hall_id: number, time: Date, movie_id: number){
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.showings(hall_id, time, movie_id) VALUES (?,?,?)", [hall_id, time, movie_id]);
+  const row = await conn.query("SELECT id FROM sieckin.showings WHERE hall_id = ? AND time = ?", [hall_id, time]);
+  const id : number = row[0].id;
+  const tblName : string = 'showing_' + id.toString();
+  await conn.query("CALL createShowing(?)", tblName);
+  const hallData = await conn.query("SELECT * FROM sieckin.hall_"+ hall_id);
+  hallData.forEach(async (row: any) => {
+    const rowNumber: number = row.row;
+    const seats: number = row.seats;
+    let i: number;
+    for (i = 1; i<= seats; i++){
+      await conn.query("INSERT INTO sieckin."+tblName+"(row, seat, isTaken) VALUES (?,?,?)", [rowNumber,i,false]);
+    }
+  })
+  if (conn) conn.release();
+}
+
+async function supportTickets(){
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.support_tickets");
+  if (conn) conn.release();
+  return rows;
+}
+
+async function takeSeat(showing_id: number, row: number, seat: number, customer: string){
+  const conn = await pool.getConnection();
+  await conn.query("UPDATE sieckin.showing_"+ showing_id +" SET is_taken = true WHERE row = ? AND seat = ?", [row, seat]);
+  await conn.query("INSERT INTO sieckin.tickets(showing_id, row, seat, customer) VALUES (?,?,?,?)", [showing_id, row, seat, customer]);
+  const ticket_row = await conn.query("SELECT id FROM sieckin.tickets WHERE showing_id = ? AND row = ? AND seat = ?", [showing_id, row, seat]);
+  if (conn) conn.release();
+  return ticket_row[0].id;
 }
