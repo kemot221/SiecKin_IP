@@ -1,14 +1,17 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { registerLocaleData } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicesModule } from './services/services.module';
-import { SharedModule } from './components/_shared/shared/shared.module';
+import { SharedModule } from './components/_shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IsLoggedInGuard } from './guards/isLoggedIn.guard';
+import localePlPl from '@angular/common/locales/pl';
+
+registerLocaleData(localePlPl);
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { IsLoggedInGuard } from './guards/isLoggedIn.guard';
     SharedModule
   ],
   providers: [
-    IsLoggedInGuard
+    IsLoggedInGuard,
+    { provide: LOCALE_ID, useValue: 'pl-PL'}
   ],
   bootstrap: [AppComponent]
 })

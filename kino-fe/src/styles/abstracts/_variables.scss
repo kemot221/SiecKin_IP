@@ -1,0 +1,67 @@
+// Black & white
+$white: #FFFFFF;
+$black: #06162D;
+
+// generate blueish color pallette
+$blue-100: #F0F5FF;
+$blue-200: #D9E4FF;
+$blue-300: #B3C8FF;
+$blue-400: #7AA3FF;
+$blue-500: #0A5BFF;
+$blue-600: #0039CC;
+
+// Gray
+$gray-100: #FAFAFA;
+$gray-200: #F6F6F6;
+$gray-300: #A0AEC0;
+$gray-400: #718096;
+$gray-500: #4A5568;
+
+// Red
+$red-100: #FEF9F9;
+$red-200: #F19B9B;
+$red-300: #E53E3E;
+
+// Green
+$green-100: #F9FCFA;
+$green-200: #37A154;
+$green-300: #37A154;
+
+// Yellow
+$yellow-100: #FCECC6;
+$yellow-200: #F9D784;
+$yellow-300: #F6C142;
+$yellow-400: #DBA21A;
+
+// Fonts
+$font-sans: "Calibre","Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
+$font-mono: "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace;
+
+// Border-radius
+$border-radius: 0.25rem;
+$border-radius-medium: $border-radius * 2;
+$border-radius-big: $border-radius * 4;
+
+// Box-shadow
+@for $i from 1 through 5 {
+  $shadow: $i * 0.2rem;
+  $shadow-inset: $i * 0.05rem;
+  $shadow-color: rgba(0, 0, 0, 0.1 * $i);
+  $shadow-inset-color: rgba(0, 0, 0, 0.05 * $i);
+  
+  .shadow-#{$i} {
+    box-shadow: 0 0 $shadow $shadow-color;
+  }
+  .shadow-inset-#{$i} {
+    box-shadow: inset $shadow-inset $shadow-inset $shadow-inset-color;
+  }
+}
+
+
+
+// root
+$root-px: 16px;
+
+:root {
+  font-size: $root-px;
+}

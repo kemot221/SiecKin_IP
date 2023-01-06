@@ -14,10 +14,25 @@ server.post('/login', (req: any, res: any, next: any) => {
     )[0];
 
     if (user) {
-      res.send({ ...formatUser(user), token: checkIfAdmin(user) });
+      res.send({ ...formatUser(user) });
     } else {
       res.status(401).send('Incorrect username or password');
     }
+});
+
+server.post('/reset-password', (req: any, res: any, next: any) => {
+  const users = readUsers();
+  const user = users.find((u: any) => u.code === req.body.resetData.code && u.password !== req.body.resetData.password);
+  const userIndex = users.findIndex((u: any) => u.code === req.body.resetData.code);
+
+  if (user) {
+    user.password = req.body.resetData.password;
+    db.users[userIndex] = user;
+    fs.writeFileSync('server/db.json', JSON.stringify(db, null, 2));
+    res.status(200).send('Password reset successful');
+  } else {
+    res.status(401).send('Incorrect user code');
+  }
 });
 
 server.post('/register', (req: any, res: any) => {

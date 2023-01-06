@@ -1,0 +1,91 @@
+.cinema_button {
+  border-radius: $border-radius;
+  border: 1px solid;
+  font-style: normal;
+  font-family: $font-sans;
+  font-weight: 700 !important;
+  cursor: pointer;
+  z-index: 1;
+  transition: all .3s ease-out;
+  text-align: center;
+  position: relative;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: .4;
+    cursor: default;
+  }
+
+  &.large {
+    font-size: 1.125rem;
+    line-height: 1.6875rem;
+    padding: .59375rem 1.4375rem;
+
+    img {
+      margin-right: .5rem;
+      height: 1.5rem;
+    }
+  }
+
+  &.medium {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: .4375rem .9375rem;
+
+    img {
+      margin-right: .5rem;
+      height: 1.5rem;
+    }
+  }
+
+  &.small {
+    font-size: .875rem;
+    line-height: 1.3125rem;
+    padding: .28125rem .71875rem;
+
+    img {
+      margin-right: .5rem;
+      height: 1.3125rem;
+    }
+  }
+
+  &.xsmall {
+    font-size: .75rem;
+    line-height: 1.125rem;
+    padding: .125rem .6875rem;
+
+    img {
+      margin-right: .5rem;
+      max-height: 1.125rem;
+    }
+  }
+  
+  &.primary {
+    background-color: $blue-500;
+    color: $white;
+    border-color: $blue-500;
+
+    &:hover {
+      background-color: $blue-600;
+      border-color: $blue-600;
+    }
+  }
+
+  &.secondary {
+    background-color: $white;
+    color: $blue-500;
+    border-color: $blue-500;
+
+    &:hover {
+      background-color: $blue-500;
+      color: $white;
+    }
+  }
+}

@@ -5,7 +5,40 @@
       "email": "admin@mail.com",
       "username": "admin",
       "password": "zaq21wSX",
-      "role": 0
+      "role": 0,
+      "code": "123456"
+    },
+    {
+      "id": 1,
+      "email": "manager@mail.com",
+      "username": "manager",
+      "password": "zaq21wSX",
+      "role": 1,
+      "code": "234567"
+    },
+    {
+      "id": 2,
+      "email": "contentmanager@mail.com",
+      "username": "contentmanager",
+      "password": "zaq21wSX",
+      "role": 2,
+      "code": "345678"
+    },
+    {
+      "id": 3,
+      "email": "accountant@mail.com",
+      "username": "accountant",
+      "password": "zaq21wSX",
+      "role": 3,
+      "code": "456789"
+    },
+    {
+      "id": 4,
+      "email": "cashier@mail.com",
+      "username": "cashier",
+      "password": "zaq21wSX",
+      "role": 4,
+      "code": "567890"
     }
   ]
 }

@@ -1,0 +1,79 @@
+@import 'abstracts/variables';
+
+.login {
+    &-wrapper {
+        width: 100vw;
+        height: 100vh;
+
+        h1 {
+            font-family: $font-sans;
+            font-size: 2rem;
+            line-height: 2.5rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(left, $blue-400, $blue-500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2.5rem;
+            z-index: 2;
+        }
+
+        .mat-card {
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+            border: 1px solid $gray-400;
+            width: 25rem;
+            height: max-content;
+            padding: 2rem;
+            background: $white;
+            z-index: 2;
+
+            .cinema_input {
+                margin-bottom: 1.5rem;
+            }
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                width: calc(100% + 2rem);
+                height: calc(100% + 2rem);
+                z-index: 1;
+            }
+            
+            &::before {
+                top: -1rem;
+                left: -1rem;
+                clip-path: polygon(80% 0, 0 0, 0 60%);
+                border-width: 2px;
+                border-style: solid;
+                border-top-left-radius: $border-radius;
+                border-image-slice: 1;
+                border-image-source: linear-gradient(to right, $blue-300, $blue-600);
+            }
+
+            &::after {
+                bottom: -1rem;
+                right: -1rem;
+                clip-path: polygon(100% 40%, 100% 100%, 20% 100%);
+                border-width: 2px;
+                border-style: solid;
+                border-bottom-right-radius: $border-radius;
+                border-image-slice: 1;
+                border-image-source: linear-gradient(to right, $blue-300, $blue-600);
+            }
+
+            &-content {
+                z-index: 2;
+            }
+        }
+    }
+
+    &-buttons {
+        width: 100%;
+        
+        .cinema_button {
+            width: 11.25rem;
+        }
+    }
+}
