@@ -40,5 +40,324 @@
       "role": 4,
       "code": "567890"
     }
+  ],
+  "cinema": {
+    "id": 0,
+    "location": "Galeria Kazimierz, Podgórska 34, 31-536 Kraków"
+  },
+  "halls": [
+    {
+      "id": 0,
+      "tag": "Sala 1",
+      "capacity": 800,
+      "row": 20,
+      "seats": 40
+    },
+    {
+      "id": 1,
+      "tag": "Sala 2",
+      "capacity": 400,
+      "row": 20,
+      "seats": 20
+    },
+    {
+      "id": 2,
+      "tag": "Sala 3",
+      "capacity": 800,
+      "row": 20,
+      "seats": 40
+    },
+    {
+      "id": 3,
+      "tag": "Sala 4",
+      "capacity": 400,
+      "row": 20,
+      "seats": 20
+    },
+    {
+      "id": 4,
+      "tag": "Sala 5",
+      "capacity": 800,
+      "row": 20,
+      "seats": 40
+    },
+    {
+      "id": 5,
+      "tag": "Sala 6",
+      "capacity": 400,
+      "row": 20,
+      "seats": 20
+    }
+  ],
+  "showings": [
+    {
+      "id": 0,
+      "hall_id": 0,
+      "date": "01-02-2023 12:00",
+      "movie_id": 0,
+      "taken_seats": [
+        {
+          "row": 1,
+          "seat": 1,
+          "is_taken": true
+        },
+        {
+          "row": 5,
+          "seat": 2,
+          "is_taken": true
+        },
+        {
+          "row": 5,
+          "seat": 3,
+          "is_taken": true
+        },
+        {
+          "row": 5,
+          "seat": 4,
+          "is_taken": true
+        },
+        {
+          "row": 8,
+          "seat": 5,
+          "is_taken": true
+        },
+        {
+          "row": 8,
+          "seat": 6,
+          "is_taken": true
+        },
+        {
+          "row": 8,
+          "seat": 7,
+          "is_taken": true
+        },
+        {
+          "row": 9,
+          "seat": 8,
+          "is_taken": true
+        },
+        {
+          "row": 9,
+          "seat": 9,
+          "is_taken": true
+        },
+        {
+          "row": 9,
+          "seat": 10,
+          "is_taken": true
+        },
+        {
+          "row": 9,
+          "seat": 11,
+          "is_taken": true
+        },
+        {
+          "row": 10,
+          "seat": 12,
+          "is_taken": true
+        },
+        {
+          "row": 10,
+          "seat": 13,
+          "is_taken": true
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "hall_id": 1,
+      "date": "01-02-2023 12:00",
+      "movie_id": 1,
+      "taken_seats": []
+    },
+    {
+      "id": 2,
+      "hall_id": 2,
+      "date": "01-02-2023 12:00",
+      "movie_id": 2,
+      "taken_seats": []
+    },
+    {
+      "id": 3,
+      "hall_id": 3,
+      "date": "01-02-2023 12:00",
+      "movie_id": 3,
+      "taken_seats": []
+    },
+    {
+      "id": 4,
+      "hall_id": 4,
+      "date": "01-02-2023 12:00",
+      "movie_id": 4,
+      "taken_seats": []
+    },
+    {
+      "id": 5,
+      "hall_id": 0,
+      "date": "01-02-2023 14:00",
+      "movie_id": 0,
+      "taken_seats": []
+    },
+    {
+      "id": 6,
+      "hall_id": 1,
+      "date": "01-02-2023 14:00",
+      "movie_id": 1,
+      "taken_seats": []
+    },
+    {
+      "id": 7,
+      "hall_id": 2,
+      "date": "01-02-2023 14:00",
+      "movie_id": 2,
+      "taken_seats": []
+    },
+    {
+      "id": 8,
+      "hall_id": 3,
+      "date": "01-02-2023 14:00",
+      "movie_id": 3,
+      "taken_seats": []
+    },
+    {
+      "id": 9,
+      "hall_id": 4,
+      "date": "01-02-2023 14:00",
+      "movie_id": 4,
+      "taken_seats": []
+    }
+  ],
+  "movies": [
+    {
+      "id": 0,
+      "title": "Avengers: Endgame",
+      "description": "Ostanie zdarzenia spowodowane przez Thanosa, który zniszczył połowę wszechświata i złamał Avengersów, zmusza pozostałych z nich do podjecia ostatnych kroków w wielkim zakończeniu Marvel Studios zwięczającym ostatnie dekady filmów o superbohaterach.",
+      "length": 181,
+      "genre": "Action",
+      "poster": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
+    },
+    {
+      "id": 1,
+      "title": "The Lion King",
+      "description": "Simba ubóstwia swojego ojca, króla Mufase i bierze sobie do serca swoje własne królewskie przeznaczenie. Ale nie wszyscy w królestwie świętują przybycie nowego lwa. Blizna, brat Mufasy i były spadkobierca ma własne plany co do tronu.",
+      "length": 118,
+      "genre": "Adventure",
+      "poster": "https://image.tmdb.org/t/p/w500/2bXbqYdUdNVa8VIWXVfclP2ICtT.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Lord of the Rings: The Fellowship of the Ring",
+      "description": "Hobbit z Shire i ośmiu towarzyszy wyruszyło w podróż, aby zniszczyć potężny pierścień i uratować Śródziemie od Mrocznego Pana Saurona.",
+      "length": 178,
+      "genre": "Adventure",
+      "poster": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg"
+    },
+    {
+      "id": 3,
+      "title": "The Lord of the Rings: The Two Towers",
+      "description": "Podczas gdy Frodo i Sam zblizaja się do Mordoru z pomocą Golluma, podzielona drużyna stoi naprzeciw nowego sojusznika Saurona, Sarumana i jego hordom Isengardu.",
+      "length": 179,
+      "genre": "Adventure",
+      "poster": "https://image.tmdb.org/t/p/w500/5VTN0pR8gcqV3EPUHHfMGnJYN9L.jpg"
+    },
+    {
+      "id": 4,
+      "title": "The Lord of the Rings: The Return of the King",
+      "description": "Gandalf i Aragorn prowadzą świat ludzi przeciwko armii Saurona, aby odwrócić jego wzrok od Frodo i Sama, gdy zbliżają się do Góry Przeznaczenia z pierścieniem władzy.",
+      "length": 201,
+      "genre": "Adventure",
+      "poster": "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg"
+    }
+  ],
+  "tickets": [
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 1,
+      "seat": 1,
+      "customer": "Jan Kowalski"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 5,
+      "seat": 2,
+      "customer": "Tomasz Fujarski"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 5,
+      "seat": 3,
+      "customer": "Jan Lech"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 5,
+      "seat": 4,
+      "customer": "Marcin Woroń"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 8,
+      "seat": 5,
+      "customer": "Bartłomiej Żal"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 8,
+      "seat": 6,
+      "customer": "Komasz Tarcz"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 8,
+      "seat": 7,
+      "customer": "Jan Nowak"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 9,
+      "seat": 8,
+      "customer": "Alicja Kot"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 9,
+      "seat": 9,
+      "customer": "Karolina Wyżeł"
+    },
+    {
+      "row": 9,
+      "seat": 10,
+      "customer": "Maciej Niemusiał"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 9,
+      "seat": 11,
+      "customer": "Michał Porcz"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 10,
+      "seat": 12,
+      "customer": "Jakub Dębski"
+    },
+    {
+      "id": 0,
+      "showing_id": 0,
+      "row": 10,
+      "seat": 13,
+      "customer": "Karol Maj"
+    }
   ]
 }

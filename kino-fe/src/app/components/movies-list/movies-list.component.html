@@ -1,0 +1,12 @@
+<ng-container *ngIf="movies$ | async as movies">
+    <div class="movies-list">
+        <div class="movies-list__item d-flex ai-c jc-fs" *ngFor="let movie of movies">
+            <img class="movies-list__item-image" [src]="movie.poster" alt="{{ movie.title }}">
+            <div class="movies-list__item-info d-flex column ai-fs jc-c">
+                <h3 class="movies-list__item-title">{{ movie.title }}</h3>
+                <p class="movies-list__item-genre">{{ movie.genre }}</p>
+                <p class="movies-list__item-desc">{{ movie.description }}</p>
+            </div>
+        </div>
+    </div>
+</ng-container>

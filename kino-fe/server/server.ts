@@ -50,6 +50,20 @@ server.post('/register', (req: any, res: any) => {
   }
 });
 
+server.post('/movies', (req: any, res: any) => {
+  const movies = readMovies();
+  const movie = movies.filter((m: any) => m.title === req.body.title)[0];
+
+  if (movie === undefined || movie === null) {
+    res.send({
+      ...req.body,
+    });
+    db.movies.push(req.body);
+  } else {
+    res.status(500).send('Movie already exists');
+  }
+})
+
 server.use(router);
 server.listen(3000, () => {
   console.log('JSON Server is running');
@@ -70,4 +84,16 @@ function readUsers() {
   const dbRaw = fs.readFileSync('./server/db.json');
   const users = JSON.parse(dbRaw).users;
   return users;
+}
+
+function readMovies() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const movies = JSON.parse(dbRaw).movies;
+  return movies;
+}
+
+function readShowings() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const showings = JSON.parse(dbRaw).showings;
+  return showings;
 }
