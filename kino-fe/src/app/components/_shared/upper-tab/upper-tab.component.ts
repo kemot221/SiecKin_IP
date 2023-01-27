@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,9 +8,13 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./upper-tab.component.scss']
 })
 export class UpperTabComponent implements OnInit {
+  @Input() public isBackVisible: boolean = false;
+  @Input() public backText!: string;
+  @Input() public backLink!: string;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -17,5 +22,9 @@ export class UpperTabComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+  }
+
+  public goBack(): void {
+    this.router.navigate([this.backLink]);
   }
 }

@@ -1,0 +1,23 @@
+<app-upper-tab [isBackVisible]="true" [backText]="'Panel główny'" [backLink]="'/dashboard'"></app-upper-tab>
+<ng-container *ngIf="moviesWithShowings$ | async as movies">
+    <ng-container *ngIf="halls$ | async as halls">
+        <div class="movies-list d-flex ai-fs jc-fs wrap">
+            <div class="movies-list__item d-flex ai-c jc-fs shadow-2" *ngFor="let movie of movies">
+                <img class="movies-list__item-image" [src]="movie.poster" alt="{{ movie.title }}">
+                <div class="movies-list__item-info d-flex column ai-fs jc-c">
+                    <h3 class="movies-list__item-title">{{ movie.title }}</h3>
+                    <p class="movies-list__item-genre">{{ movie.genre }}</p>
+                    <p class="movies-list__item-desc">{{ movie.description }}</p>
+                    <div class="movies-list__item-showings d-flex ai-c jc-fs">
+                        <button class="movies-list__item-showing d-flex column ai-c jc-c" *ngFor="let showing of movie.showings" (click)="onShowingClick(movie, showing)">
+                            <p class="movies-list__item-showing-price">{{ getHallName(showing.hall_id, halls) }}</p>
+                            <p class="movies-list__item-showing-time">{{ getTime(showing.date) }}</p>
+                            <p class="movies-list__item-showing-date">{{ getDay(showing.date) }}</p>
+                            <p class="movies-list__item-showing-date">{{ getDate(showing.date) }}</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
