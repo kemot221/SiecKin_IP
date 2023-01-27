@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { HallModel } from '../../models/hall.model';
-import { MovieModel } from '../../models/movie.model';
-import { ShowingModel, ShowingSeats } from '../../models/showing.model';
+import { Observable } from 'rxjs';
+import { ShowingSeats } from '../../models/showing.model';
 import { CinemaService } from '../../services/cinema.service';
 
 @Component({
@@ -13,10 +11,16 @@ import { CinemaService } from '../../services/cinema.service';
 })
 export class TicketsSellingProcessComponent implements OnInit {
   showingId!: number;
-  showing$: Observable<ShowingModel> = new Observable();
-  hall$: Observable<HallModel> = new Observable();
-  movie$: Observable<MovieModel> = new Observable();
+  hallId!: number;
+  movieId!: number;
+  showing$: Observable<any> = new Observable();
+  hall$: Observable<any> = new Observable();
+  movie$: Observable<any> = new Observable();
+  hallWithID$: Observable<any> = new Observable();
+  showingWithID$: Observable<any> = new Observable();
   seatsTable: ShowingSeats[] = [];
+  seatsTableForDB: ShowingSeats[] = [];
+  wasShown: boolean = false;
 
   constructor(
     private router: Router,
@@ -24,20 +28,24 @@ export class TicketsSellingProcessComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.router.url.split('/').forEach((urlPart, index) => {
-      if (urlPart === 'showing') {
-        this.showingId = +this.router.url.split('/')[index + 1];
-      }
-    });
+    // get showing id, movie id and hall id from url
+    this.showingId = Number(this.router.url.split('/')[4]);
+    this.movieId = Number(this.router.url.split('/')[6]);
+    this.hallId = Number(this.router.url.split('/')[8]);
 
-    this.cinemaService.getShowing(this.showingId).subscribe(
-      showing => {
-        this.showing$ = this.cinemaService.getShowing(showing.id);
-        this.hall$ = this.cinemaService.getHall(showing.hall_id);
-        this.movie$ = this.cinemaService.getMovie(showing.movie_id);
-        this.showing$.subscribe(showing => console.log(showing));
-      }
-    );
+    this.showing$ = this.cinemaService.getShowing(this.showingId);
+    this.hall$ = this.cinemaService.getHall(this.hallId);
+    this.movie$ = this.cinemaService.getMovie(this.movieId);
+
+    this.showingWithID$ = this.cinemaService.getShowingWithID(this.showingId);
+    this.hallWithID$ = this.cinemaService.getHallWithID(this.hallId);
+    
+    // this.cinemaService.getShowing(this.showingId).subscribe(showing => console.log(showing));
+    // this.cinemaService.getHall(this.hallId).subscribe(hall => console.log(hall));
+    // this.cinemaService.getMovie(this.movieId).subscribe(movie => console.log(movie));
+
+    // this.cinemaService.getShowingWithID(this.showingId).subscribe(showing => console.log(showing));
+    // this.cinemaService.getHallWithID(this.hallId).subscribe(hall => console.log(hall));
   }
 
   public getTime(date: Date) {
@@ -56,10 +64,6 @@ export class TicketsSellingProcessComponent implements OnInit {
     return String.fromCharCode(65 + rowNumber);
   }
 
-  public checkIfTaken(showing: ShowingModel ,rowNumber: number, seatNumber: number) {
-    return showing.taken_seats.find(seat => seat.row === rowNumber && seat.seat === seatNumber)?.is_taken;
-  }
-
   public checkIfPicked(rowNumber: number, seatNumber: number) {
     return this.seatsTable.find(seat => seat.row === rowNumber && seat.seat === seatNumber)?.is_taken;
   }
@@ -70,12 +74,20 @@ export class TicketsSellingProcessComponent implements OnInit {
       seat: seatNumber,
       is_taken: true
     }
+    const seatForDB: ShowingSeats = {
+      row: rowNumber + 1,
+      seat: seatNumber + 1,
+      is_taken: true,
+    }
     this.seatsTable.push(seat);
+    this.seatsTableForDB.push(seatForDB);
   }
 
   public removeSeat(rowNumber: number, seatNumber: number, event: Event) {
     // remove seat from seatsTable but watch out for row
     this.seatsTable = this.seatsTable.filter(seat => !(seat.row === rowNumber && seat.seat === seatNumber));
+    this.seatsTableForDB = this.seatsTableForDB.filter(seatForDB => !(seatForDB.row === rowNumber + 1 && seatForDB.seat === seatNumber + 1));
+    // stop propagation to prevent adding seat
     event.stopPropagation();
   }
 
@@ -84,6 +96,6 @@ export class TicketsSellingProcessComponent implements OnInit {
   }
 
   public sellTickets() {
-    this.cinemaService.sellTickets(this.showingId, this.seatsTable);
+    this.cinemaService.sellTickets(this.showingId, this.seatsTableForDB);
   }
 }

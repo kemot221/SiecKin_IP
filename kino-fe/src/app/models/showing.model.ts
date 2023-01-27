@@ -1,9 +1,8 @@
 export class ShowingModel {
     id!: number;
     hall_id!: number;
-    date!: Date;
+    time!: Date;
     movie_id!: number;
-    taken_seats!: ShowingSeats[];
 }
 
 export class ShowingSeats {

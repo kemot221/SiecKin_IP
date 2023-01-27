@@ -21,6 +21,9 @@ export class MoviesListComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.cinemaService.getMovies().subscribe(movies => console.log(movies));
+    this.cinemaService.getShowings().subscribe(showings => console.log(showings));
+
     this.moviesWithShowings$ = combineLatest([
       this.cinemaService.getMovies(),
       this.cinemaService.getShowings(),
@@ -40,8 +43,6 @@ export class MoviesListComponent implements OnInit {
       }
     ));
     this.halls$ = this.cinemaService.getHalls();
-    this.moviesWithShowings$.subscribe(movies => console.log(movies));
-    this.halls$.subscribe(halls => console.log(halls));
   }
 
   public getHallName(hallId: number, halls: HallModel[]) {
@@ -62,6 +63,6 @@ export class MoviesListComponent implements OnInit {
   }
 
   public onShowingClick(movie: MovieWithShowings, showing: ShowingModel) {
-    this.router.navigate(['tickets-selling/movies', 'showing', showing.id]);
+    this.router.navigate(['tickets-selling/movies', 'showing', showing.id, 'movie', movie.id , 'hall', showing.hall_id]);
   }
 }

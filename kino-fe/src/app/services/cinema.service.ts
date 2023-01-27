@@ -38,12 +38,19 @@ export class CinemaService {
     return this.http.get<HallModel>(SERVER_URL + '/halls/' + id);
   }
 
+  public getShowingWithID(id: number) : Observable<ShowingModel> {
+    return this.http.get<ShowingModel>(SERVER_URL + '/showingsWithId/' + id);
+  }
+
+  public getHallWithID(id: number) : Observable<HallModel> {
+    return this.http.get<HallModel>(SERVER_URL + '/hallsWithId/' + id);
+  }
+
   public sellTickets(showingId: number, pickedSeats: ShowingSeats[]) {
-    return this.http.post(SERVER_URL + '/showings/', {
+    return this.http.post(SERVER_URL + '/showings', {
       showingId,
       pickedSeats
     }).subscribe((response: any) => {
-      console.log(response);
       this.router.navigate(['/tickets-selling/movies'])
     });
   }

@@ -13,7 +13,7 @@ export class AppRoutes {
             { path: 'dashboard', component: DashboardComponent, canActivate: [IsLoggedInGuard] },
             { path: 'login', component: LoginComponent },
             { path: 'tickets-selling/movies', component: MoviesListComponent, canActivate: [IsLoggedInGuard] },
-            { path: 'tickets-selling/movies/showing/:showing_id', component: TicketsSellingProcessComponent }
+            { path: 'tickets-selling/movies/showing/:showing_id/movie/:movie_id/hall/:hall', component: TicketsSellingProcessComponent }
         ]
     }
 }

@@ -1,82 +1,99 @@
-<app-upper-tab [isBackVisible]="true" [backText]="'Lista filmów'" [backLink]="'/tickets-selling/movies'"></app-upper-tab>
+<app-upper-tab
+  [isBackVisible]="true"
+  [backText]="'Lista filmów'"
+  [backLink]="'/tickets-selling/movies'"
+></app-upper-tab>
 <ng-container *ngIf="showing$ | async as showing">
   <ng-container *ngIf="hall$ | async as hall">
     <ng-container *ngIf="movie$ | async as movie">
-      <div class="tickets-selling d-flex column ai-c jc-fs">
-        <p class="tickets-selling__title">
-          {{ movie.title }}
-        </p>
-        <div class="tickets-selling__info d-flex ai-c jc-sb">
-          <p class="tickets-selling__hall">
-            {{ hall.tag }}
-          </p>
-          <p class="tickets-selling__date">
-            {{ getDay(showing.date) }}
-            {{ getDate(showing.date) }}
-            {{ getTime(showing.date) }}
-          </p>
-        </div>
-        <div class="tickets-selling__seats d-flex ai-c jc-c">
-          <div class="rows-letters d-flex column ai-c jc-c">
-            <div
-              class="letter d-flex ai-c jc-c"
-              *ngFor="let row of [].constructor(hall.rows); let i = index"
-            >
-              {{ getRowLetter(i) }}
-            </div>
-          </div>
-          <div class="seats-table d-flex column ai-c jc-c">
-            <div
-              class="row d-flex ai-c jc-c"
-              *ngFor="let row of [].constructor(hall.rows); let i = index"
-            >
-              <button
-                class="seat d-flex ai-c jc-c"
-                *ngFor="
-                  let row of [].constructor(hall.seats_per_row);
-                  let j = index
-                "
-                disabled="{{checkIfTaken(showing, i, j) || checkIfPicked(i, j)}}"
-                [class.picked]="checkIfPicked(i, j)"
-                (click)="addSeat(i, j)"
-              >
-                {{ j }}
-              </button>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="seatsTable.length > 0" class="tickets-selling__picked d-flex column ai-c jc-c">
-            <p class="tickets-selling__picked-title">
-                Wybrane miejsca:
+      <ng-container *ngIf="showingWithID$ | async as showingWithID">
+        <ng-container *ngIf="hallWithID$ | async as hallWithID">
+          <div class="tickets-selling d-flex column ai-c jc-fs">
+            <p class="tickets-selling__title">
+              {{ movie[0].title }}
             </p>
-            <div class="tickets-selling__picked-rows d-flex column ai-c">
-                <div class="tickets-selling__picked-row d-flex ai-c" *ngFor="let seat of seatsTable">
-                    <div class="row">
-                        Rząd: {{seat.row}}
-                    </div>
-                    <div class="seat">
-                        Miejsce: {{seat.seat}}
-                    </div>
-                    <div class="price">
-                        Cena: 19zł
-                    </div>
-                    <div class="button">
-                        <button class="cinema_button secondary medium" (click)="removeSeat(seat.row, seat.seat, $event)">
-                            Usuń
-                        </button>
-                    </div>
+            <div class="tickets-selling__info d-flex ai-c jc-sb">
+              <p class="tickets-selling__hall">
+                Sala {{ hall[0].tag }}
+              </p>
+              <p class="tickets-selling__date">
+                {{ getDay(showing[0].time) }}
+                {{ getDate(showing[0].time) }}
+                {{ getTime(showing[0].time) }}
+              </p>
+            </div>
+            <div class="tickets-selling__seats d-flex ai-c jc-c">
+              <div class="rows-letters d-flex column ai-c jc-c">
+                <div
+                  class="letter d-flex ai-c jc-c"
+                  *ngFor="let row of hallWithID; let i = index"
+                >
+                  {{ getRowLetter(i) }}
                 </div>
+              </div>
+              <div class="seats-table d-flex column ai-c jc-c">
+                <div
+                  class="row d-flex ai-c jc-c"
+                  *ngFor="let row of hallWithID; let i = index"
+                >
+                  <button
+                    class="seat d-flex ai-c jc-c"
+                    *ngFor="
+                      let row of [].constructor(hallWithID[i].seats);
+                      let j = index
+                    "
+                    disabled="{{
+                      showingWithID[10 * i + j].is_taken || checkIfPicked(i, j)
+                    }}"
+                    [class.picked]="checkIfPicked(i, j)"
+                    (click)="addSeat(i, j)"
+                  >
+                    {{ j + 1 }}
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="tickets-selling__picked-buttons d-flex ai-c jc-fe">
-                <button class="cinema_button secondary medium" (click)="goBack()">
-                    Anuluj
+            <div
+              *ngIf="seatsTable.length > 0"
+              class="tickets-selling__picked d-flex column ai-c jc-c"
+            >
+              <p class="tickets-selling__picked-title">Wybrane miejsca:</p>
+              <div class="tickets-selling__picked-rows d-flex column ai-c">
+                <div
+                  class="tickets-selling__picked-row d-flex ai-c"
+                  *ngFor="let seat of seatsTable"
+                >
+                  <div class="row">Rząd: {{ seat.row }}</div>
+                  <div class="seat">Miejsce: {{ seat.seat }}</div>
+                  <div class="price">Cena: 19zł</div>
+                  <div class="button">
+                    <button
+                      class="cinema_button secondary medium"
+                      (click)="removeSeat(seat.row, seat.seat, $event)"
+                    >
+                      Usuń
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="tickets-selling__picked-buttons d-flex ai-c jc-fe">
+                <button
+                  class="cinema_button secondary medium"
+                  (click)="goBack()"
+                >
+                  Anuluj
                 </button>
-                <button class="cinema_button primary medium" (click)="sellTickets()">
-                    Sprzedaj bilety
+                <button
+                  class="cinema_button primary medium"
+                  (click)="sellTickets()"
+                >
+                  Sprzedaj bilety
                 </button>
+              </div>
             </div>
-        </div>
-      </div>
+          </div>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-container>
