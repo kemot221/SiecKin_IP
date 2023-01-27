@@ -50,19 +50,35 @@ server.post('/register', (req: any, res: any) => {
   }
 });
 
-server.post('/movies', (req: any, res: any) => {
-  const movies = readMovies();
-  const movie = movies.filter((m: any) => m.title === req.body.title)[0];
+// sell tickets
+server.post('/showings', (req: any, res: any) => {
+  const showings = readShowings();
+  const pickedSeats = req.body.pickedSeats;
+  let showing = showings.find((s: any) => s.id === req.body.showingId);
+  showing = { ...showing, taken_seats: [...showing.taken_seats, ...pickedSeats] };
+  const showingIndex = showings.findIndex((s: any) => s.id === req.body.showingId);
+  db.showings[showingIndex] = showing;
+  fs.writeFileSync('server/db.json', JSON.stringify(db, null, 2));
+  res.send(showing);
+});
 
-  if (movie === undefined || movie === null) {
-    res.send({
-      ...req.body,
-    });
-    db.movies.push(req.body);
-  } else {
-    res.status(500).send('Movie already exists');
-  }
-})
+server.get('/movies/:id', (req: any, res: any) => {
+  const movies = readMovies();
+  const movie = movies.find((m: any) => m.id === +req.params.id);
+  res.send(movie);
+});
+
+server.get('/showings/:id', (req: any, res: any) => {
+  const showings = readShowings();
+  const showing = showings.find((s: any) => s.id === +req.params.id);
+  res.send(showing);
+});
+
+server.get('/halls/:id', (req: any, res: any) => {
+  const halls = readHalls();
+  const hall = halls.find((h: any) => h.id === +req.params.id);
+  res.send(hall);
+});
 
 server.use(router);
 server.listen(3000, () => {
@@ -96,4 +112,10 @@ function readShowings() {
   const dbRaw = fs.readFileSync('./server/db.json');
   const showings = JSON.parse(dbRaw).showings;
   return showings;
+}
+
+function readHalls() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const halls = JSON.parse(dbRaw).halls;
+  return halls;
 }

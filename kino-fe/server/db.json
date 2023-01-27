@@ -50,43 +50,43 @@
       "id": 0,
       "tag": "Sala 1",
       "capacity": 800,
-      "row": 20,
-      "seats": 40
+      "rows": 20,
+      "seats_per_row": 40
     },
     {
       "id": 1,
       "tag": "Sala 2",
       "capacity": 400,
-      "row": 20,
-      "seats": 20
+      "rows": 20,
+      "seats_per_row": 20
     },
     {
       "id": 2,
       "tag": "Sala 3",
       "capacity": 800,
-      "row": 20,
-      "seats": 40
+      "rows": 20,
+      "seats_per_row": 40
     },
     {
       "id": 3,
       "tag": "Sala 4",
       "capacity": 400,
-      "row": 20,
-      "seats": 20
+      "rows": 20,
+      "seats_per_row": 20
     },
     {
       "id": 4,
       "tag": "Sala 5",
       "capacity": 800,
-      "row": 20,
-      "seats": 40
+      "rows": 20,
+      "seats_per_row": 40
     },
     {
       "id": 5,
       "tag": "Sala 6",
       "capacity": 400,
-      "row": 20,
-      "seats": 20
+      "rows": 20,
+      "seats_per_row": 20
     }
   ],
   "showings": [
@@ -97,68 +97,48 @@
       "movie_id": 0,
       "taken_seats": [
         {
-          "row": 1,
-          "seat": 1,
-          "is_taken": true
-        },
-        {
-          "row": 5,
-          "seat": 2,
-          "is_taken": true
-        },
-        {
-          "row": 5,
-          "seat": 3,
-          "is_taken": true
-        },
-        {
-          "row": 5,
-          "seat": 4,
-          "is_taken": true
-        },
-        {
-          "row": 8,
-          "seat": 5,
-          "is_taken": true
-        },
-        {
-          "row": 8,
-          "seat": 6,
-          "is_taken": true
-        },
-        {
-          "row": 8,
-          "seat": 7,
-          "is_taken": true
-        },
-        {
-          "row": 9,
-          "seat": 8,
-          "is_taken": true
-        },
-        {
-          "row": 9,
-          "seat": 9,
-          "is_taken": true
-        },
-        {
-          "row": 9,
-          "seat": 10,
-          "is_taken": true
-        },
-        {
-          "row": 9,
-          "seat": 11,
-          "is_taken": true
-        },
-        {
           "row": 10,
-          "seat": 12,
+          "seat": 14,
           "is_taken": true
         },
         {
-          "row": 10,
-          "seat": 13,
+          "row": 11,
+          "seat": 15,
+          "is_taken": true
+        },
+        {
+          "row": 12,
+          "seat": 16,
+          "is_taken": true
+        },
+        {
+          "row": 14,
+          "seat": 19,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 19,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 18,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 20,
+          "is_taken": true
+        },
+        {
+          "row": 14,
+          "seat": 20,
+          "is_taken": true
+        },
+        {
+          "row": 14,
+          "seat": 18,
           "is_taken": true
         }
       ]
@@ -233,7 +213,7 @@
       "title": "Avengers: Endgame",
       "description": "Ostanie zdarzenia spowodowane przez Thanosa, który zniszczył połowę wszechświata i złamał Avengersów, zmusza pozostałych z nich do podjecia ostatnych kroków w wielkim zakończeniu Marvel Studios zwięczającym ostatnie dekady filmów o superbohaterach.",
       "length": 181,
-      "genre": "Action",
+      "genre": "Akcja",
       "poster": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
     },
     {
@@ -241,7 +221,7 @@
       "title": "The Lion King",
       "description": "Simba ubóstwia swojego ojca, króla Mufase i bierze sobie do serca swoje własne królewskie przeznaczenie. Ale nie wszyscy w królestwie świętują przybycie nowego lwa. Blizna, brat Mufasy i były spadkobierca ma własne plany co do tronu.",
       "length": 118,
-      "genre": "Adventure",
+      "genre": "Przygoda",
       "poster": "https://image.tmdb.org/t/p/w500/2bXbqYdUdNVa8VIWXVfclP2ICtT.jpg"
     },
     {
@@ -249,7 +229,7 @@
       "title": "Lord of the Rings: The Fellowship of the Ring",
       "description": "Hobbit z Shire i ośmiu towarzyszy wyruszyło w podróż, aby zniszczyć potężny pierścień i uratować Śródziemie od Mrocznego Pana Saurona.",
       "length": 178,
-      "genre": "Adventure",
+      "genre": "Przygoda",
       "poster": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg"
     },
     {
@@ -257,7 +237,7 @@
       "title": "The Lord of the Rings: The Two Towers",
       "description": "Podczas gdy Frodo i Sam zblizaja się do Mordoru z pomocą Golluma, podzielona drużyna stoi naprzeciw nowego sojusznika Saurona, Sarumana i jego hordom Isengardu.",
       "length": 179,
-      "genre": "Adventure",
+      "genre": "Przygoda",
       "poster": "https://image.tmdb.org/t/p/w500/5VTN0pR8gcqV3EPUHHfMGnJYN9L.jpg"
     },
     {
@@ -265,7 +245,7 @@
       "title": "The Lord of the Rings: The Return of the King",
       "description": "Gandalf i Aragorn prowadzą świat ludzi przeciwko armii Saurona, aby odwrócić jego wzrok od Frodo i Sama, gdy zbliżają się do Góry Przeznaczenia z pierścieniem władzy.",
       "length": 201,
-      "genre": "Adventure",
+      "genre": "Przygoda",
       "poster": "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg"
     }
   ],
@@ -358,6 +338,84 @@
       "row": 10,
       "seat": 13,
       "customer": "Karol Maj"
+    },
+    {
+      "tickets": [
+        {
+          "row": 14,
+          "seat": 16,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 17,
+          "is_taken": true
+        },
+        {
+          "row": 16,
+          "seat": 18,
+          "is_taken": true
+        }
+      ],
+      "showingId": "0",
+      "id": 1
+    },
+    {
+      "tickets": [
+        {
+          "row": 14,
+          "seat": 18,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 19,
+          "is_taken": true
+        },
+        {
+          "row": 16,
+          "seat": 20,
+          "is_taken": true
+        },
+        {
+          "row": 17,
+          "seat": 21,
+          "is_taken": true
+        },
+        {
+          "row": 17,
+          "seat": 22,
+          "is_taken": true
+        }
+      ],
+      "showingId": "0",
+      "id": 2
+    },
+    {
+      "tickets": [
+        {
+          "row": 14,
+          "seat": 16,
+          "is_taken": true
+        },
+        {
+          "row": 15,
+          "seat": 17,
+          "is_taken": true
+        },
+        {
+          "row": 16,
+          "seat": 18,
+          "is_taken": true
+        },
+        {
+          "row": 17,
+          "seat": 19,
+          "is_taken": true
+        }
+      ],
+      "showingId": "0",
+      "id": 3
     }
   ]
 }

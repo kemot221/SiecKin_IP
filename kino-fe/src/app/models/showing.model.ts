@@ -1,8 +1,13 @@
 export class ShowingModel {
     id!: number;
-    title!: string;
-    description!: string;
-    length!: number;
-    genre!: number;
-    poster!: string;
+    hall_id!: number;
+    date!: Date;
+    movie_id!: number;
+    taken_seats!: ShowingSeats[];
+}
+
+export class ShowingSeats {
+    row!: number;
+    seat!: number;
+    is_taken: boolean = false;
 }

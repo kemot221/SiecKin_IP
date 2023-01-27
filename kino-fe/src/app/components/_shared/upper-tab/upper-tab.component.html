@@ -1,7 +1,10 @@
 <div class="upper-tab-wrapper d-flex ai-c jc-sb">
-    <div class="upper-tab-buttons">
+    <div class="upper-tab-buttons d-flex ai-c">
         <button class="cinema_button primary medium logout" (click)="logout()">
             Wyloguj się
+        </button>
+        <button *ngIf="isBackVisible" class="cinema_button secondary medium logout" (click)="goBack()">
+            {{backText}}
         </button>
     </div>
     <app-date-info></app-date-info>

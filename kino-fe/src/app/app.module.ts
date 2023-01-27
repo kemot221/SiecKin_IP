@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IsLoggedInGuard } from './guards/isLoggedIn.guard';
 import localePlPl from '@angular/common/locales/pl';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
+import { TicketsSellingProcessComponent } from './components/tickets-selling-process/tickets-selling-process.component';
 
 registerLocaleData(localePlPl);
 
@@ -19,7 +20,8 @@ registerLocaleData(localePlPl);
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    MoviesListComponent
+    MoviesListComponent,
+    TicketsSellingProcessComponent
   ],
   imports: [
     BrowserModule,

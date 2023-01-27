@@ -1,3 +1,5 @@
+import { ShowingModel } from "./showing.model";
+
 export class MovieModel {
     id!: number;
     title!: string;
@@ -5,4 +7,8 @@ export class MovieModel {
     length!: number;
     genre!: number;
     poster!: string;
+}
+
+export class MovieWithShowings extends MovieModel {
+    showings!: ShowingModel[];
 }

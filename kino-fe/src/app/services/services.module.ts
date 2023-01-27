@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from './user.service';
-import { MoviesService } from './movies.service';
+import { CinemaService } from './cinema.service';
 
 @NgModule({
     imports: [
@@ -17,7 +17,7 @@ import { MoviesService } from './movies.service';
         CookieService,
         AuthService,
         UserService,
-        MoviesService
+        CinemaService
     ]
 })
 export class ServicesModule { }
