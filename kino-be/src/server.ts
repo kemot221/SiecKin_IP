@@ -19,8 +19,9 @@ server.post('/login', async (req: any, res: any, next: any) => {
   const user = (await users).filter(
     (u: any) => u.email === req.body.user.email && u.password === req.body.user.password
   )[0];
+  const userRole = await checkRole(user, true);
   if (user) {
-    res.send({ ...formatUser(user), token: checkIfAdmin(user) });
+    res.send({ ...formatUser({...user, role: userRole}), token: checkRole(user) });
   } else {
     res.status(401).send('Incorrect username or password');
   }
@@ -47,7 +48,7 @@ server.post('/register', async (req: any, res: any) => {
   if (user === undefined || user === null) {
     res.send({
       ...formatUser(req.body),
-      token: checkIfAdmin(req.body),
+      token: checkRole(req.body),
     });
     const conn = await pool.getConnection();
     await conn.query("INSERT INTO sieckin.users(email, login, password) VALUES (?,?,?)", [req.body.user.email, req.body.user.login, req.body.user.password]);
@@ -83,6 +84,21 @@ server.get('/halls/:id', (req: any, res: any) => {
   res.send(hall);
 });
 
+server.get('/movies', (req: any, res: any) => {
+  const movies = readMovies();
+  res.send(movies);
+});
+
+server.get('/showings', (req: any, res: any) => {
+  const showings = readShowings();
+  res.send(showings);
+});
+
+server.get('/halls', (req: any, res: any) => {
+  const halls = readHalls();
+  res.send(halls);
+});
+
 server.listen(3000, () => {
   console.log('Server is running');
 });
@@ -92,13 +108,11 @@ function formatUser(user: any) {
   return user;
 }
 
-async function checkIfAdmin(user: any, bypassToken = false) {
+async function checkRole(user: any, bypassToken = false) {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT role_id FROM sieckin.user_role WHERE user_id = ?", user.id);
   if (conn) conn.release();
-  return rows[0].role_id === 1 || bypassToken === true
-    ? 'admin-token'
-    : 'user-token';
+  return rows[0].role_id;
 }
 
 async function readUsers(){
@@ -166,40 +180,43 @@ async function readShowings() {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.showings");
   if (conn) conn.release();
-  return rows;
+  console.log(rows[0]);
+  return rows[0];
 }
 
 async function readShowing(id: number) {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.showings WHERE id = ?", id);
   if (conn) conn.release();
-  return rows;
+  return rows[0];
 }
 
 async function readMovies() {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.movies");
   if (conn) conn.release();
-  return rows;
+  console.log(rows[0]);
+  return rows[0];
 }
 
 async function readMovie(id: number) {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.movies WHERE id = ?", id);
   if (conn) conn.release();
-  return rows;
+  return rows[0];
 }
 
 async function readHalls() {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.halls");
   if (conn) conn.release();
-  return rows;
+  console.log(rows[0]);
+  return rows[0];
 }
 
 async function readHall(id: number) {
   const conn = await pool.getConnection();
   const rows = await conn.query("SELECT * FROM sieckin.halls WHERE id = ?", id);
   if (conn) conn.release();
-  return rows;
+  return rows[0];
 }
