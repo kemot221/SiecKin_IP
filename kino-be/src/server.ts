@@ -57,6 +57,32 @@ server.post('/register', async (req: any, res: any) => {
   }
 });
 
+server.post('/showings', async (req: any, res: any) => {
+  const showings = readShowings();
+  const pickedSeats = req.body.pickedSeats;
+  let showing = (await showings).find((s: any) => s.id === req.body.showingId);
+  showing = { ...showing, taken_seats: [...showing.taken_seats, ...pickedSeats] };
+  for (let s of req.body.pickedSeats) {
+    takeSeat(req.body.showingId, s.row, s.seat, "Imie Nazwisko");
+  }
+  res.send(showing);
+});
+
+server.get('/movies/:id', (req: any, res: any) => {
+  const movie = readMovie(req.params.id);
+  res.send(movie);
+});
+
+server.get('/showings/:id', (req: any, res: any) => {
+  const showing = readShowing(req.params.id);
+  res.send(showing);
+});
+
+server.get('/halls/:id', (req: any, res: any) => {
+  const hall = readHall(req.params.id);
+  res.send(hall);
+});
+
 server.listen(3000, () => {
   console.log('Server is running');
 });
@@ -134,4 +160,46 @@ async function takeSeat(showing_id: number, row: number, seat: number, customer:
   const ticket_row = await conn.query("SELECT id FROM sieckin.tickets WHERE showing_id = ? AND row = ? AND seat = ?", [showing_id, row, seat]);
   if (conn) conn.release();
   return ticket_row[0].id;
+}
+
+async function readShowings() {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.showings");
+  if (conn) conn.release();
+  return rows;
+}
+
+async function readShowing(id: number) {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.showings WHERE id = ?", id);
+  if (conn) conn.release();
+  return rows;
+}
+
+async function readMovies() {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.movies");
+  if (conn) conn.release();
+  return rows;
+}
+
+async function readMovie(id: number) {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.movies WHERE id = ?", id);
+  if (conn) conn.release();
+  return rows;
+}
+
+async function readHalls() {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.halls");
+  if (conn) conn.release();
+  return rows;
+}
+
+async function readHall(id: number) {
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM sieckin.halls WHERE id = ?", id);
+  if (conn) conn.release();
+  return rows;
 }
