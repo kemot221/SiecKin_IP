@@ -10,6 +10,8 @@ import { SharedModule } from './components/_shared/shared.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { IsLoggedInGuard } from './guards/isLoggedIn.guard';
 import localePlPl from '@angular/common/locales/pl';
+import { MoviesListComponent } from './components/movies-list/movies-list.component';
+import { TicketsSellingProcessComponent } from './components/tickets-selling-process/tickets-selling-process.component';
 
 registerLocaleData(localePlPl);
 
@@ -17,7 +19,9 @@ registerLocaleData(localePlPl);
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    MoviesListComponent,
+    TicketsSellingProcessComponent
   ],
   imports: [
     BrowserModule,
