@@ -50,6 +50,36 @@ server.post('/register', (req: any, res: any) => {
   }
 });
 
+// sell tickets
+server.post('/showings', (req: any, res: any) => {
+  const showings = readShowings();
+  const pickedSeats = req.body.pickedSeats;
+  let showing = showings.find((s: any) => s.id === req.body.showingId);
+  showing = { ...showing, taken_seats: [...showing.taken_seats, ...pickedSeats] };
+  const showingIndex = showings.findIndex((s: any) => s.id === req.body.showingId);
+  db.showings[showingIndex] = showing;
+  fs.writeFileSync('server/db.json', JSON.stringify(db, null, 2));
+  res.send(showing);
+});
+
+server.get('/movies/:id', (req: any, res: any) => {
+  const movies = readMovies();
+  const movie = movies.find((m: any) => m.id === +req.params.id);
+  res.send(movie);
+});
+
+server.get('/showings/:id', (req: any, res: any) => {
+  const showings = readShowings();
+  const showing = showings.find((s: any) => s.id === +req.params.id);
+  res.send(showing);
+});
+
+server.get('/halls/:id', (req: any, res: any) => {
+  const halls = readHalls();
+  const hall = halls.find((h: any) => h.id === +req.params.id);
+  res.send(hall);
+});
+
 server.use(router);
 server.listen(3000, () => {
   console.log('JSON Server is running');
@@ -70,4 +100,22 @@ function readUsers() {
   const dbRaw = fs.readFileSync('./server/db.json');
   const users = JSON.parse(dbRaw).users;
   return users;
+}
+
+function readMovies() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const movies = JSON.parse(dbRaw).movies;
+  return movies;
+}
+
+function readShowings() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const showings = JSON.parse(dbRaw).showings;
+  return showings;
+}
+
+function readHalls() {
+  const dbRaw = fs.readFileSync('./server/db.json');
+  const halls = JSON.parse(dbRaw).halls;
+  return halls;
 }

@@ -1,0 +1,136 @@
+@import 'abstracts/variables';
+
+.tickets-selling {
+    padding-top: 20px;
+
+    &__title {
+        font-family: $font-sans;
+        font-size: 2rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+        color: $blue-500;
+        margin-bottom: 1rem;
+    }
+
+    &__info {
+        font-family: $font-sans;
+        font-size: 1rem;
+        line-height: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 2.5rem;
+    }
+
+    &__hall {
+        margin-right: 2rem;
+    }
+
+    &__seats {
+        margin-bottom: 2.5rem;
+
+        .letter {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin: 0 0.5rem 0.5rem 0;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+
+        .seat {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin: 0 0.5rem 0.5rem 0;
+            cursor: pointer;
+            border: 1px solid $gray-400;
+            border-radius: $border-radius;
+            background: $blue-300;
+            transition: .2s all ease-in-out;
+
+            &:hover {
+                border-color: $blue-500;
+                background: $blue-500;
+                color: $white;
+            }
+
+            &:disabled {
+                background-color: $gray-500;
+                color: $white;
+                cursor: default;
+            }
+
+            &.picked {
+                border-color: $blue-500;
+                background: $blue-500;
+                color: $white;
+            }
+        }
+
+        .row {
+            .seat {
+                &:last-of-type {
+                    margin-right: 0;
+                }
+            }
+
+            &:last-of-type {
+                .seat {
+                    margin-bottom: 0;
+
+                    &:last-of-type {
+                        .seat {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__picked {
+        &-title {
+            font-family: $font-sans;
+            font-size: 1.5rem;
+            line-height: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        &-row {
+            border: 1px solid $gray-400;
+            border-top: 0;
+
+            &:first-of-type {
+                border-top: 1px solid $gray-400;
+                border-top-left-radius: $border-radius;
+                border-top-right-radius: $border-radius;
+            }
+
+            &:last-of-type {
+                border-bottom-left-radius: $border-radius;
+                border-bottom-right-radius: $border-radius;
+            }
+
+            div {
+                padding: 1rem;
+
+                &:last-of-type {
+                    padding: .375rem 1rem;
+                }
+            }
+        }
+        
+        &-buttons {
+            width: 100%;
+            margin-bottom: 2.5rem;
+
+            button {
+                margin-top: 1rem;
+
+                &:last-of-type {
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
+}

@@ -41,6 +41,7 @@ export class AuthService {
         this.cookieService.set('isLoggedIn', 'false');
         this.cookieService.delete('user');
         this.router.navigate(['/login']);
+        window.location.reload();
     }
 
     public resetPassword(resetData: ResetPasswordModel) {

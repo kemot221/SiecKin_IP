@@ -14,14 +14,11 @@ export class DashboardComponent implements OnInit {
   public userRole = Role;
 
   constructor(
-    private cookieService: CookieService,
     private userService: UserService
   ) {
   }
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    console.log(this.user);
   }
-
 }
