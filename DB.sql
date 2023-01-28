@@ -136,3 +136,6 @@ INSERT INTO `sieckin`.`showing_1` (`row`, `seat`, `is_taken`) VALUES ('7', '10',
 
 --set whole last row to taken
 UPDATE `sieckin`.`showing_1` SET `is_taken` = true WHERE `row` = '7';
+
+--add a column poster to movie table
+ALTER TABLE `sieckin`.`movie` ADD COLUMN `poster` VARCHAR(255) NULL AFTER `description`;

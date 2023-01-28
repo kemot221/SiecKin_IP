@@ -63,8 +63,8 @@
                   class="tickets-selling__picked-row d-flex ai-c"
                   *ngFor="let seat of seatsTable"
                 >
-                  <div class="row">Rząd: {{ seat.row }}</div>
-                  <div class="seat">Miejsce: {{ seat.seat }}</div>
+                  <div class="row">Rząd: {{ seat.row+1 }}</div>
+                  <div class="seat">Miejsce: {{ seat.seat+1 }}</div>
                   <div class="price">Cena: 19zł</div>
                   <div class="button">
                     <button
@@ -75,6 +75,12 @@
                     </button>
                   </div>
                 </div>
+              </div>
+              <div
+                class="tickets-selling__picked-totals d-flex ai-c"
+              >
+                <div class="total">Razem:</div>
+                <div class="price">{{19 * seatsTable.length}}zł</div>
               </div>
               <div class="tickets-selling__picked-buttons d-flex ai-c jc-fe">
                 <button

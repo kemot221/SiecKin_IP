@@ -113,9 +113,41 @@
 
             div {
                 padding: 1rem;
+                min-width: 78px;
+                max-width: 78px;
+                text-align: center;
+
+                &.seat {
+                    text-align: left;
+                }
+
+                &.price {
+                    text-align: right;
+                }
 
                 &:last-of-type {
                     padding: .375rem 1rem;
+                    min-width: unset;
+                    max-width: unset;
+                }
+            }
+        }
+        
+        &-totals {
+            border: 1px solid $gray-400;
+            border-top: 0;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+            margin-left: 8px;
+            
+            div {
+                padding: 1rem;
+                min-width: 78px;
+                max-width: 78px;
+                text-align: left;
+
+                &:last-of-type {
+                    text-align: right;
                 }
             }
         }

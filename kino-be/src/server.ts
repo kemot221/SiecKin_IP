@@ -146,7 +146,6 @@ async function takeSeat(
   row: number,
   seat: number
 ) {
-  let id: number;
   const conn = await pool.getConnection();
   await conn.query(
     "UPDATE sieckin.showing_" +
@@ -154,6 +153,49 @@ async function takeSeat(
       " SET is_taken = true WHERE row = ? AND seat = ?",
     [row, seat]
   );
+  if (conn) conn.release();
+}
+
+async function createHall(cinema_id: number, tag: string, seats: number[]) {
+  let capacity: number = 0;
+  seats.forEach((element: number) => {
+    capacity += element;
+  });
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.halls(cinema_id, tag, capacity) VALUES (?,?,?)", [cinema_id, tag, capacity])
+  .then((res: any) => {
+    const id: number = res.insertId;
+    const tblName: string = 'hall_' + id.toString();
+    conn.query("CALL createHall(?)", tblName).then(
+      seats.forEach(async (element: number, index) => {
+        await conn.query("INSERT INTO sieckin." + tblName + "(row, seats) VALUES (?,?)", [index + 1, element]);
+      })
+    );
+  });
+  if (conn) conn.release();
+}
+
+async function createShowing(hall_id: number, time: Date, movie_id: number) {
+  const conn = await pool.getConnection();
+  await conn.query("INSERT INTO sieckin.showings(hall_id, time, movie_id) VALUES (?,?,?)", [hall_id, time, movie_id])
+  .then((res: any) => {
+    const id: number = res.insertId;
+    const tblName: string = 'showing_' + id.toString();
+    conn.query("CALL createShowing(?)", tblName)
+    .then(
+      conn.query("SELECT * FROM sieckin.hall_" + hall_id)
+      .then((res: any) => {
+        res.forEach(async (row: any) => {
+          const rowNumber: number = row.row;
+          const seats: number = row.seats;
+          let i: number;
+          for (i = 1; i <= seats; i++) {
+            await conn.query("INSERT INTO sieckin." + tblName + "(row, seat, isTaken) VALUES (?,?,?)", [rowNumber, i, false]);
+          }
+        })
+      })
+    );
+  });
   if (conn) conn.release();
 }
 
